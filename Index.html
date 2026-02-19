@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Black – The Color of Elegance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      background: #0a0a0a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 60px 20px 80px;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── Heading ── */
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 10vw, 7rem);
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ffffff 0%, #aaaaaa 40%, #ffffff 70%, #888 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 60px;
+      text-align: center;
+      position: relative;
+      animation: shimmer 4s infinite linear;
+      background-size: 200% auto;
+    }
+
+    @keyframes shimmer {
+      0%   { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    /* ── Square Box ── */
+    .box {
+      position: relative;
+      width: min(700px, 95vw);
+      aspect-ratio: 1 / 1;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow:
+        0 0 0 1px rgba(255,255,255,0.08),
+        0 30px 80px rgba(0,0,0,0.9),
+        0 0 60px rgba(255,255,255,0.04);
+    }
+
+    /* ── Slider (background layer) ── */
+    .slider {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1.4s ease-in-out;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .slide.active { opacity: 1; }
+
+    /* 10 CSS-gradient slides — no external images needed */
+    .slide:nth-child(1)  { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); }
+    .slide:nth-child(2)  { background: radial-gradient(ellipse at top, #1a1a2e 0%, #16213e 50%, #0f3460 100%); }
+    .slide:nth-child(3)  { background: conic-gradient(from 180deg at 50% 50%, #000000, #1a0000, #000000, #001a00, #000000, #00001a, #000000); }
+    .slide:nth-child(4)  { background: linear-gradient(160deg, #0d0d0d 0%, #1a0a00 50%, #0d0d0d 100%); }
+    .slide:nth-child(5)  { background: radial-gradient(circle at 30% 70%, #200020 0%, #000000 60%, #001020 100%); }
+    .slide:nth-child(6)  { background: linear-gradient(45deg, #000000, #0a0a0a, #111111, #050505); background-size: 400% 400%; animation: gradMove 8s ease infinite; }
+    .slide:nth-child(7)  { background: radial-gradient(ellipse at bottom, #1b0000 0%, #000000 70%); }
+    .slide:nth-child(8)  { background: linear-gradient(200deg, #000000 0%, #0a001a 40%, #000000 80%, #001a0a 100%); }
+    .slide:nth-child(9)  { background: conic-gradient(from 90deg at 50% 50%, #000000 0deg, #111111 90deg, #000000 180deg, #0a0a0a 270deg, #000000 360deg); }
+    .slide:nth-child(10) { background: radial-gradient(circle at 70% 30%, #0a0a00 0%, #000000 50%, #00000a 100%); }
+
+    /* Decorative star particles on some slides */
+    .slide::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 80% 10%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 50% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 10% 60%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 70%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(2px 2px at 35% 15%, rgba(255,255,255,0.7) 0%, transparent 100%),
+        radial-gradient(1px 1px at 65% 55%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(2px 2px at 75% 85%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 45% 45%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 15% 90%, rgba(255,255,255,0.5) 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    @keyframes gradMove {
+      0%, 100% { background-position: 0% 50%; }
+      50%       { background-position: 100% 50%; }
+    }
+
+    /* ── Black overlay at 20% opacity ── */
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.20);
+      z-index: 1;
+    }
+
+    /* ── Slider dots ── */
+    .dots {
+      position: absolute;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 8px;
+      z-index: 10;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.35);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .dot.active {
+      background: #ffffff;
+      transform: scale(1.4);
+    }
+
+    /* ── Content inside box ── */
+    .content {
+      position: relative;
+      z-index: 5;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 44px;
+      text-align: center;
+    }
+
+    .content p {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(0.88rem, 2.2vw, 1.08rem);
+      font-weight: 300;
+      line-height: 1.95;
+      color: rgba(255, 255, 255, 0.92);
+      letter-spacing: 0.025em;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.8);
+      max-width: 560px;
+    }
+
+    /* Colored "Black" words */
+    .b-red    { color: #ff4d4d;  font-weight: 600; text-shadow: 0 0 12px rgba(255,77,77,0.7); }
+    .b-green  { color: #39ff14;  font-weight: 600; text-shadow: 0 0 12px rgba(57,255,20,0.7); }
+    .b-yellow { color: #ffe600;  font-weight: 600; text-shadow: 0 0 12px rgba(255,230,0,0.7); }
+    .b-orange { color: #ff8c00;  font-weight: 600; text-shadow: 0 0 12px rgba(255,140,0,0.7); }
+    .b-pink   { color: #ff69b4;  font-weight: 600; text-shadow: 0 0 12px rgba(255,105,180,0.7); }
+    .b-cyan   { color: #00e5ff;  font-weight: 600; text-shadow: 0 0 12px rgba(0,229,255,0.7); }
+    .b-purple { color: #bf5fff;  font-weight: 600; text-shadow: 0 0 12px rgba(191,95,255,0.7); }
+    .b-gold   { color: #ffd700;  font-weight: 600; text-shadow: 0 0 12px rgba(255,215,0,0.7); }
+    .b-lime   { color: #c6ff00;  font-weight: 600; text-shadow: 0 0 12px rgba(198,255,0,0.7); }
+    .b-coral  { color: #ff6b6b;  font-weight: 600; text-shadow: 0 0 12px rgba(255,107,107,0.7); }
+
+    /* Slide counter */
+    .counter {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+      z-index: 10;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.45);
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* Subtle border glow */
+    .box::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent 40%, rgba(255,255,255,0.05));
+      z-index: 20;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Black</h1>
+
+  <div class="box">
+
+    <!-- Slider -->
+    <div class="slider" id="slider">
+      <div class="slide active"></div>
+      <div class="slide"></div>
+      <div class="slide"></div>
+      <div class="slide"></div>
+      <div class="slide"></div>
+      <div class="slide"></div>
+      <div class="slide"></div>
+      <div class="slide"></div>
+      <div class="slide"></div>
+      <div class="slide"></div>
+    </div>
+
+    <!-- 20% black overlay -->
+    <div class="overlay"></div>
+
+    <!-- Slide counter -->
+    <div class="counter" id="counter">01 / 10</div>
+
+    <!-- Paragraph content -->
+    <div class="content">
+      <p>
+        <span class="b-red">Black</span> is the darkest color, the result of the absence of all visible light.
+        Throughout history, <span class="b-green">Black</span> has symbolized power, elegance, and mystery.
+        In fashion, <span class="b-yellow">Black</span> is timeless — a little <span class="b-orange">Black</span> dress
+        never goes out of style. In art, <span class="b-pink">Black</span> is used to create depth and contrast,
+        giving life to every other color around it. Scientists tell us that <span class="b-cyan">Black</span>
+        absorbs all wavelengths of light, reflecting none back to our eyes. In nature,
+        <span class="b-purple">Black</span> appears in the darkest night sky, in the deepest oceans, and in the
+        wings of a raven. Culturally, <span class="b-gold">Black</span> represents both mourning and sophistication.
+        In technology, <span class="b-lime">Black</span> screens and devices feel premium and sleek.
+        Truly, <span class="b-coral">Black</span> is not just a color — it is a feeling, a statement, and a universe of its own.
+      </p>
+    </div>
+
+    <!-- Dots -->
+    <div class="dots" id="dots"></div>
+
+  </div>
+
+  <script>
+    const slides  = document.querySelectorAll('.slide');
+    const dotsEl  = document.getElementById('dots');
+    const counter = document.getElementById('counter');
+    let current   = 0;
+    let timer;
+
+    // Build dots
+    slides.forEach((_, i) => {
+      const d = document.createElement('div');
+      d.className = 'dot' + (i === 0 ? ' active' : '');
+      d.addEventListener('click', () => goTo(i));
+      dotsEl.appendChild(d);
+    });
+
+    function goTo(n) {
+      slides[current].classList.remove('active');
+      dotsEl.children[current].classList.remove('active');
+      current = (n + slides.length) % slides.length;
+      slides[current].classList.add('active');
+      dotsEl.children[current].classList.add('active');
+      counter.textContent = String(current + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
+      resetTimer();
+    }
+
+    function resetTimer() {
+      clearInterval(timer);
+      timer = setInterval(() => goTo(current + 1), 3500);
+    }
+
+    resetTimer();
+  </script>
+
+</body>
+</html>
